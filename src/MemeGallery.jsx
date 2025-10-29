@@ -101,7 +101,7 @@ export default function MemeGallery() {
       {/* Intro section */}
       <section className="min-h-screen flex flex-col items-center justify-center text-center snap-center bg-white">
         <h1 className="text-4xl font-light tracking-wide mb-8">Meme Series</h1>
-        <p className="text-base text-gray-700 italic leading-relaxed max-w-prose mx-auto px-4 mb-6">
+        <p className="text-base text-gray-700 italic mb-6 max-w-[22ch] mx-auto leading-snug">
           This is an artwork in the feed-format, please scroll further down to get involved.
         </p>
         <p className="text-sm text-gray-500 mb-8">Sasha Pashkov · 2025</p>
