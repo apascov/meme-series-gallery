@@ -124,13 +124,14 @@ export default function MemeGallery() {
           title={meme.title}
           nextInView={inViews[i + 1] || false}
           refHook={refs[i]}
+          index={i}
         />
       ))}
     </div>
   )
 }
 
-function MemeSection({ base, overlay, title, nextInView, refHook }) {
+function MemeSection({ base, overlay, title, nextInView, refHook, index }) {
   return (
     <section
       ref={refHook}
