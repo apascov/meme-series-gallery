@@ -1,6 +1,33 @@
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
 
+// Helper: convert numbers to Roman numerals (1 → I, 12 → XII)
+const toRoman = (num) => {
+  const romans = [
+    ["M", 1000],
+    ["CM", 900],
+    ["D", 500],
+    ["CD", 400],
+    ["C", 100],
+    ["XC", 90],
+    ["L", 50],
+    ["XL", 40],
+    ["X", 10],
+    ["IX", 9],
+    ["V", 5],
+    ["IV", 4],
+    ["I", 1],
+  ];
+  let result = "";
+  for (const [symbol, value] of romans) {
+    while (num >= value) {
+      result += symbol;
+      num -= value;
+    }
+  }
+  return result;
+};
+
 export default function MemeGallery() {
   const memes = [
     {
@@ -74,6 +101,9 @@ export default function MemeGallery() {
       {/* Intro section */}
       <section className="min-h-screen flex flex-col items-center justify-center text-center snap-center bg-white">
         <h1 className="text-4xl font-light tracking-wide mb-8">Meme Series</h1>
+        <p className="text-base text-gray-700 max-w-md mb-6 italic">
+          This is an artwork in the feed-format, please scroll further down to get involved.
+        </p>
         <p className="text-sm text-gray-500 mb-8">Sasha Pashkov · 2025</p>
         <div className="flex space-x-6">
           <a href="https://www.instagram.com/pash_sash?igsh=MTI2ZnN1amR2NGw4ZQ%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer">
@@ -121,6 +151,9 @@ function MemeSection({ base, overlay, title, nextInView, refHook }) {
           animate={{ opacity: nextInView ? 1 : 0 }}
           transition={{ duration: 1.2, ease: "easeInOut" }}
         />
+        <p className="mt-4 text-xs text-gray-400 tracking-widest">
+          {toRoman(index + 1)}
+        </p>
       </div>
       {/* optional minimalist title */}
       <p className="mt-6 text-gray-400 text-sm select-none">{title}</p>
