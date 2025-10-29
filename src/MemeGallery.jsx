@@ -152,10 +152,10 @@ function MemeSection({ base, overlay, title, nextInView, refHook, index }) {
           animate={{ opacity: nextInView ? 1 : 0 }}
           transition={{ duration: 1.2, ease: "easeInOut" }}
         />
-        <p className="mt-4 text-xs text-gray-400 tracking-widest">
-          {toRoman(index + 1)}
-        </p>
       </div>
+      <p className="mt-4 text-xs text-gray-400 tracking-widest">
+          {toRoman(index + 1)}
+      </p>
       {/* optional minimalist title */}
       <p className="mt-6 text-gray-400 text-sm select-none">{title}</p>
     </section>
