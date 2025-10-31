@@ -1,4 +1,5 @@
 import { useRef } from "react"
+import { useState } from "react"
 import { motion, useInView } from "framer-motion"
 
 // Helper: convert numbers to Roman numerals (1 → I, 12 → XII)
@@ -102,7 +103,7 @@ export default function MemeGallery() {
       <section className="min-h-screen flex flex-col items-center justify-center text-center snap-center bg-white">
         <h1 className="text-4xl font-light tracking-wide mb-8">Meme Series</h1>
         <p className="text-base text-gray-700 italic mb-6 max-w-[22ch] mx-auto leading-snug">
-          This is an artwork in the feed-format, please scroll further down to get involved.
+          This is an artwork in the feed-format, please scroll further down to get involved. 
         </p>
         <p className="text-sm text-gray-500 mb-8">Sasha Pashkov · 2025</p>
         <div className="flex space-x-6">
@@ -132,32 +133,47 @@ export default function MemeGallery() {
 }
 
 function MemeSection({ base, overlay, title, nextInView, refHook, index }) {
+  const [visible, setVisible] = useState(false)
+  const handleReveal = () => {
+    if (visible) return; // prevent spamming while visible
+    setVisible(true);
+    setTimeout(() => setVisible(false), 1000); // hide after 3 sec
+  };
+
   return (
     <section
       ref={refHook}
       className="relative min-h-[30vh] flex flex-col items-center justify-center snap-start bg-white overflow-hidden"
     >
-      <div className="relative flex items-center justify-center">
+      <div
+        className="relative flex items-center justify-center"
+        onClick={handleReveal}
+        onTouchStart={handleReveal}
+      >
         {/* base meme */}
         <img
           src={base}
           alt="empty meme"
           className="h-[85vh] w-auto max-w-[90vw] object-contain"
         />
-        {/* overlay fades in when NEXT meme is in view */}
+
+        {/* overlay revealed by touch */}
         <motion.img
           src={overlay}
           alt="drawing overlay"
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[85vh] w-auto max-w-[90vw] object-contain"
-          animate={{ opacity: nextInView ? 1 : 0 }}
-          transition={{ duration: 1.2, ease: "easeInOut" }}
+          animate={{ opacity: visible ? 1 : 0 }}
+          transition={{ duration: 1, ease: "easeInOut" }}
         />
       </div>
-      <p className="mt-4 text-xs text-gray-400 tracking-widest">
-          {toRoman(index + 1)}
+
+      {/* Roman numeral below */}
+      <p className="mt-4 text-xs text-gray-400 tracking-widest text-center">
+        {toRoman(index + 1)}
       </p>
+
       {/* optional minimalist title */}
       <p className="mt-6 text-gray-400 text-sm select-none">{title}</p>
     </section>
-  )
+  );
 }
